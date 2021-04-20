@@ -2,8 +2,8 @@ package processor_test
 
 import (
 	"fmt"
-	"github.com/inverse-inc/packetfence/go/netflow5"
-	"github.com/inverse-inc/packetfence/go/netflow5/processor"
+	"github.com/inverse-inc/go-utils/netflow5"
+	"github.com/inverse-inc/go-utils/netflow5/processor"
 	"net"
 	"os"
 	"os/signal"

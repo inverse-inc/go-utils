@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/cevaris/ordered_map v0.0.0-20171019141434-01ce2b16ad4f
 	github.com/go-stack/stack v1.8.0 // indirect
+	github.com/go-test/deep v1.0.7
 	github.com/google/uuid v1.1.1
 	github.com/inconshreveable/log15 v0.0.0-20171019012758-0decfc6c20d9
 	github.com/kr/pretty v0.2.1

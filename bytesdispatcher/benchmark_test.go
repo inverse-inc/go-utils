@@ -1,7 +1,7 @@
 package bytesdispatcher
 
 import (
-	"github.com/inverse-inc/packetfence/go/bytearraypool"
+	"github.com/inverse-inc/go-utils/bytearraypool"
 	"testing"
 )
 

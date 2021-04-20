@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/inverse-inc/packetfence/go/sflow"
-	"github.com/inverse-inc/packetfence/go/sflow/processor"
+	"github.com/inverse-inc/go-utils/sflow"
+	"github.com/inverse-inc/go-utils/sflow/processor"
 	"net"
 	"os"
 	"os/signal"

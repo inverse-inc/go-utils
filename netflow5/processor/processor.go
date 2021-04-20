@@ -2,9 +2,9 @@ package processor
 
 import (
 	"errors"
-	"github.com/inverse-inc/packetfence/go/bytearraypool"
-	"github.com/inverse-inc/packetfence/go/bytesdispatcher"
-	"github.com/inverse-inc/packetfence/go/netflow5"
+	"github.com/inverse-inc/go-utils/bytearraypool"
+	"github.com/inverse-inc/go-utils/bytesdispatcher"
+	"github.com/inverse-inc/go-utils/netflow5"
 	"net"
 	"runtime"
 	"strings"
