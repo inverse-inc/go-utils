@@ -7,7 +7,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"ioutil"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/httputil"
