@@ -317,3 +317,18 @@ func Int2IP(nn uint32) net.IP {
 	binary.BigEndian.PutUint32(ip, nn)
 	return ip
 }
+
+var readFromStrRegexp = regexp.MustCompile(`^str:(.+)`)
+
+func ReadFromFileOrStr(val string) string {
+  var valRead string
+  if match := readFromStrRegexp.FindAllStringSubmatch(val, -1); match != nil {
+    return match[0][1]
+  } else {
+    valReadBytes, err := ioutil.ReadFile(val)
+    sharedutils.CheckError(err)
+    valRead = string(valReadBytes)
+  }
+  return valRead
+}
+
