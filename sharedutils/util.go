@@ -7,6 +7,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"ioutil"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -326,7 +327,7 @@ func ReadFromFileOrStr(val string) string {
     return match[0][1]
   } else {
     valReadBytes, err := ioutil.ReadFile(val)
-    sharedutils.CheckError(err)
+    CheckError(err)
     valRead = string(valReadBytes)
   }
   return valRead
