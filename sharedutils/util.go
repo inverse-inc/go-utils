@@ -18,6 +18,7 @@ import (
 	"testing"
 	"time"
 	"unicode"
+	"unicode/utf8"
 
 	"github.com/cevaris/ordered_map"
 	"github.com/kr/pretty"
@@ -44,25 +45,34 @@ var validSimpleMacHexRegex = regexp.MustCompile(`^[a-fA-F0-9]{12}$`)
 var macPairHexRegex = regexp.MustCompile(`[a-fA-F0-9]{2}`)
 
 func IsEnabled(enabled string) bool {
-	if e, found := ISENABLED[strings.TrimSpace(enabled)]; found {
+	if e, found := IsEnabledValid(enabled); found {
 		return e
 	}
 
 	return false
 }
 
+func IsEnabledValid(enabled string) (bool, bool) {
+	e, found := ISENABLED[strings.ToLower(strings.TrimSpace(enabled))]
+	return e, found
+}
+
 func UcFirst(str string) string {
-	for i, v := range str {
-		return string(unicode.ToUpper(v)) + str[i+1:]
+	r, size := utf8.DecodeRuneInString(str)
+	if r == utf8.RuneError {
+		return str
 	}
-	return ""
+
+	return string(unicode.ToUpper(r)) + str[size:]
 }
 
 func LcFirst(str string) string {
-	for i, v := range str {
-		return string(unicode.ToLower(v)) + str[i+1:]
+	r, size := utf8.DecodeRuneInString(str)
+	if r == utf8.RuneError {
+		return str
 	}
-	return ""
+
+	return string(unicode.ToLower(r)) + str[size:]
 }
 
 // TODO: handle odd number of elements in args
@@ -322,14 +332,13 @@ func Int2IP(nn uint32) net.IP {
 var readFromStrRegexp = regexp.MustCompile(`^str:(.+)`)
 
 func ReadFromFileOrStr(val string) string {
-  var valRead string
-  if match := readFromStrRegexp.FindAllStringSubmatch(val, -1); match != nil {
-    return match[0][1]
-  } else {
-    valReadBytes, err := ioutil.ReadFile(val)
-    CheckError(err)
-    valRead = string(valReadBytes)
-  }
-  return valRead
+	var valRead string
+	if match := readFromStrRegexp.FindAllStringSubmatch(val, -1); match != nil {
+		return match[0][1]
+	} else {
+		valReadBytes, err := ioutil.ReadFile(val)
+		CheckError(err)
+		valRead = string(valReadBytes)
+	}
+	return valRead
 }
-

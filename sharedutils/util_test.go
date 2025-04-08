@@ -106,3 +106,32 @@ func TestCopyHttpRequest(t *testing.T) {
 	}
 
 }
+
+func TestUcFirst(t *testing.T) {
+	tests := []struct{ l, u string }{
+		{l: "james", u: "James"},
+		{l: "ámes", u: "Ámes"},
+	}
+
+	for _, test := range tests {
+		got := UcFirst(test.l)
+		if got != test.u {
+			t.Fatalf("UcFirst(%s) failed got '%s' expected '%s'", test.l, got, test.u)
+		}
+
+		got = UcFirst(test.u)
+		if got != test.u {
+			t.Fatalf("UcFirst(%s) failed got '%s' expected '%s'", test.u, got, test.u)
+		}
+
+		got = LcFirst(test.u)
+		if got != test.l {
+			t.Fatalf("LcFirst(%s) failed got '%s' expected '%s'", test.u, got, test.l)
+		}
+
+		got = LcFirst(test.l)
+		if got != test.l {
+			t.Fatalf("LcFirst(%s) failed got '%s' expected '%s'", test.l, got, test.l)
+		}
+	}
+}
