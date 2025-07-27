@@ -24,6 +24,22 @@ import (
 	"github.com/kr/pretty"
 )
 
+var ISENABLED = map[string]bool{
+	"enabled": true,
+	"enable":  true,
+	"yes":     true,
+	"y":       true,
+	"true":    true,
+	"1":       true,
+
+	"disabled": false,
+	"disable":  false,
+	"false":    false,
+	"no":       false,
+	"n":        false,
+	"0":        false,
+}
+
 var macGarbageRegex = regexp.MustCompile(`[\s\-\.:]`)
 var validSimpleMacHexRegex = regexp.MustCompile(`^[a-fA-F0-9]{12}$`)
 var macPairHexRegex = regexp.MustCompile(`[a-fA-F0-9]{2}`)
