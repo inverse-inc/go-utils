@@ -51,6 +51,9 @@ func IsEnabled(value interface{}) bool {
 	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
 		return fmt.Sprintf("%v", v) == "1"
 	case string:
+		if strings.TrimSpace(v) == "" {
+			return false
+		}
 		lower := strings.ToLower(strings.TrimSpace(v))
 		switch lower {
 		case "true", "yes", "y", "enabled", "enable", "on", "1", "active":
