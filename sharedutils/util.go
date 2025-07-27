@@ -24,37 +24,35 @@ import (
 	"github.com/kr/pretty"
 )
 
-var ISENABLED = map[string]bool{
-	"enabled": true,
-	"enable":  true,
-	"yes":     true,
-	"y":       true,
-	"true":    true,
-	"1":       true,
-
-	"disabled": false,
-	"disable":  false,
-	"false":    false,
-	"no":       false,
-	"n":        false,
-	"0":        false,
-}
-
 var macGarbageRegex = regexp.MustCompile(`[\s\-\.:]`)
 var validSimpleMacHexRegex = regexp.MustCompile(`^[a-fA-F0-9]{12}$`)
 var macPairHexRegex = regexp.MustCompile(`[a-fA-F0-9]{2}`)
 
-func IsEnabled(enabled string) bool {
-	if e, found := IsEnabledValid(enabled); found {
-		return e
+func IsEnabled(value interface{}) bool {
+	switch v := value.(type) {
+	case bool:
+		return v
+	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
+		return fmt.Sprintf("%v", v) == "1"
+	case string:
+		lower := strings.ToLower(strings.TrimSpace(v))
+		switch lower {
+		case "true", "yes", "y", "enabled", "enable", "on", "1", "active":
+			return true
+		case "false", "no", "n", "disabled", "disable", "off", "0", "inactive":
+			return false
+		default:
+			if b, err := strconv.ParseBool(lower); err == nil {
+				return b
+			}
+			if i, err := strconv.Atoi(lower); err == nil {
+				return i == 1
+			}
+			return false
+		}
+	default:
+		return IsEnabled(fmt.Sprintf("%v", v))
 	}
-
-	return false
-}
-
-func IsEnabledValid(enabled string) (bool, bool) {
-	e, found := ISENABLED[strings.ToLower(strings.TrimSpace(enabled))]
-	return e, found
 }
 
 func UcFirst(str string) string {
